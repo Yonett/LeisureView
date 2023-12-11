@@ -1,0 +1,74 @@
+﻿<Window x:Class="LeisureView.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LeisureView"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="900" Width="1265" ResizeMode="NoResize">
+    <Grid ShowGridLines="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="4*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0">PLAYER 1</TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="1">YOUR TURN</TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="2">4</TextBlock>
+
+            <Canvas x:Name="GameField" Background="LightGray" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" MouseEnter="GameField_MouseEnter" MouseMove="GameField_MouseMove" MouseLeave="GameField_MouseLeave" Cursor="None">
+                
+            </Canvas>
+
+            <TextBlock Grid.Row="2" Grid.Column="0">6</TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="1">YOUR TURN</TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="2">PLAYER 2</TextBlock>
+
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0">TURN</TextBlock>
+            
+            <StackPanel Grid.Row="1">
+                <TextBlock x:Name="XText">1</TextBlock>
+                <TextBlock x:Name="YText">1</TextBlock>
+            </StackPanel>
+
+            <Grid Grid.Row="2">
+                
+            </Grid>
+
+            <Button Grid.Row="3">
+                
+            </Button>
+
+            <TextBlock Grid.Row="4">
+                Version
+            </TextBlock>
+
+        </Grid>
+
+    </Grid>
+</Window>
