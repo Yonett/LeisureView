@@ -42,9 +42,9 @@
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="3*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
                 <RowDefinition Height="5*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
@@ -66,10 +66,23 @@
                 <TextBlock HorizontalAlignment="Stretch"     VerticalAlignment="Top" FontWeight="Bold" FontSize="40" Foreground="#eef4f4" x:Name="XText">1</TextBlock>
                 <TextBlock  HorizontalAlignment="Stretch"    VerticalAlignment="Top" FontWeight="Bold" FontSize="40" Foreground="#eef4f4" x:Name="YText">1</TextBlock>
             </DockPanel> -->
+            <ScrollViewer Grid.Row="2">
+            <Grid Margin="20 0 20 20" Background="#a4b0be" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <Grid Margin="20 0 20 20" Background="#a4b0be" Grid.Row="2">
+                <TextBlock Grid.Column="0"  HorizontalAlignment="Center"      VerticalAlignment="Top" FontWeight="Bold" FontSize="10" Foreground="#eef4f4" x:Name="turnHistory"></TextBlock>
+                <TextBlock Grid.Column="1"  HorizontalAlignment="Center"    VerticalAlignment="Top" FontWeight="Bold" FontSize="10" Foreground="#eef4f4" x:Name="playerHistory"></TextBlock>
+                <TextBlock Grid.Column="2"  HorizontalAlignment="Center"      VerticalAlignment="Top" FontWeight="Bold" FontSize="10" Foreground="#eef4f4" x:Name="diceHistory"></TextBlock>
+                <TextBlock Grid.Column="3"  HorizontalAlignment="Center"      VerticalAlignment="Top" FontWeight="Bold" FontSize="10" Foreground="#eef4f4" x:Name="scoreHistory"></TextBlock>
                 
+                <!--<TextBlock HorizontalAlignment="Center"      VerticalAlignment="TOP" FontWeight="Bold" FontSize="40" Foreground="#eef4f4">0</TextBlock>-->
             </Grid>
+            </ScrollViewer>
 
             
                <Button Margin="20 0 20 0" FontWeight="Bold" FontSize="30" Foreground="#eef4f4" Background="#a4b0be" Grid.Row="3" x:Name="RollTheDice" Click="RollTheDice_Click">

@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Documents;
 using System.Collections.Generic;
 using Point = System.Windows.Point;
 using Rectangle = System.Windows.Shapes.Rectangle;
@@ -19,11 +20,12 @@ namespace LeisureView
     {
         public int gameState = 1;
         public int player = 1;
-        public int N = 9;
-
+        //public int N = 9;
+        public int N = 20;
         byte impossibleTurnsInTheRow = 0;
         public bool startGame = false;
         public bool diceTheRolled = false;
+        public double xSize, ySize = 40;
         public int numberOfMissedMoves = 0;
         bool isTurnPossible, isTurnProceed;
         public Rectangle[] rects;
@@ -40,6 +42,23 @@ namespace LeisureView
         {
             InitializeComponent();
             turn++;
+            this.turnHistory.Inlines.Clear();
+            this.playerHistory.Inlines.Clear();
+            this.diceHistory.Inlines.Clear();
+            this.scoreHistory.Inlines.Clear();
+
+            this.turnHistory.Inlines.Add(new Run("Ход\n"));
+            this.playerHistory.Inlines.Add(new Run("Игрок\n"));
+            this.diceHistory.Inlines.Add(new Run("бросок\n"));
+            this.scoreHistory.Inlines.Add(new Run("Очки\n"));
+
+            /*
+            this.turnHistory.Text = "Ход";
+            this.playerHistory.Text = "Игрок";
+            this.first_diceHistory.Text = "1 бросок";
+            this.second_diceHistory.Text = "2 бросок";
+            this.scoreHistory.Text = "Очки";
+            */
             this.firstTurn.Text = "YOUR TURN";
             this.TurnName.Text = "TURN " + turn.ToString();
             Rounds.Add(new Round());
@@ -59,8 +78,18 @@ namespace LeisureView
             {
                 for (int j = 0; j < size; j++)
                 {
-                    rects[i * size + j].Width = 40;
-                    rects[i * size + j].Height = 40;
+                    if (N < 10)
+                    {
+                        xSize = ySize = 40;
+                        rects[i * size + j].Width = 40;
+                        rects[i * size + j].Height = 40;
+                    }
+                    else
+                    {
+                        xSize = ySize = 540.0 / (1.25 * N + 2.25);
+                        rects[i * size + j].Width = xSize;
+                        rects[i * size + j].Height = ySize;
+                    }
 
                     switch (field.cells[i * size + j].kind)
                     {
@@ -77,9 +106,9 @@ namespace LeisureView
                             rects[i * size + j].Fill = Brushes.Black;
                             break;
                     }
-
-                    Canvas.SetLeft(rects[i * size + j], j * 50);
-                    Canvas.SetTop(rects[i * size + j], i * 50);
+                    
+                    Canvas.SetLeft(rects[i * size + j], j * (xSize+xSize/4.0));
+                    Canvas.SetTop(rects[i * size + j], i * (xSize + xSize / 4.0));
                     GameField.Children.Add(rects[i * size + j]);
                 }
             }
@@ -89,11 +118,11 @@ namespace LeisureView
                 for (int j = 0; j < 6; j++)
                 {
                     piece_rects[i * 6 + j] = new Rectangle();
-                    piece_rects[i * 6 + j].Width = 40;
-                    piece_rects[i * 6 + j].Height = 40;
+                    piece_rects[i * 6 + j].Width = xSize;
+                    piece_rects[i * 6 + j].Height = ySize;
 
                     piece_rects[i * 6 + j].Stroke = Brushes.Tomato;
-                    piece_rects[i * 6 + j].StrokeThickness = 10.0;
+                    piece_rects[i * 6 + j].StrokeThickness = xSize/4;
 
                     piece_rects[i * 6 + j].Visibility = Visibility.Hidden;
 
@@ -135,7 +164,7 @@ namespace LeisureView
 
                 if (field.CanPlacePiece(piece, index))
                 {
-                    MessageBox.Show($"Can place on {index} cell");
+                    //MessageBox.Show($"Can place on {index} cell");
                     for (int i = 0; i < piece.h; i++)
                         for (int j = 0; j < piece.w; j++)
                         {
@@ -154,17 +183,52 @@ namespace LeisureView
                     diceTheRolled = false;
                     if (player == 1)
                     {
+                        player1.FirstRolles.Add(piece.w);
+                        player1.SecondRolles.Add(piece.h);
+                        Rounds[turn - 1].FirstMove_FirstDice = piece.w;
+                        Rounds[turn - 1].FirstMove_SecondDice = piece.h;
                         this.firstTurn.Text = "";
                         this.secondTurn.Text = "YOUR TURN";
                         player1.score += piece.h * piece.w;
                         this.firstScore.Text = player1.score.ToString();
+
+                        this.turnHistory.Inlines.Add(new Run("  " + turn.ToString() + "\n"));
+                        this.playerHistory.Inlines.Add(new Run("  " + player.ToString()+"\n") { Foreground= Brushes.Tomato });
+                        this.diceHistory.Inlines.Add(new Run("  " + piece.h.ToString()+"-"+ piece.w.ToString() + "\n"));
+                        this.scoreHistory.Inlines.Add(new Run("  " + player1.score.ToString()+"\n"));
+
+                        /*
+                        this.turnHistory.Text += "\n" + turn.ToString();
+                        this.playerHistory.Text += "\n" + player.ToString();
+                        this.first_diceHistory.Text += "\n" + piece.h.ToString();
+                        this.second_diceHistory.Text += "\n" + piece.w.ToString();
+                        this.scoreHistory.Text += "\n" + player1.score.ToString();*/
                     }
                     else 
                     {
+                        player2.FirstRolles.Add(piece.w);
+                        player2.SecondRolles.Add(piece.h);
+                        Rounds[turn - 1].SecondMove_FirstDice = piece.w;
+                        Rounds[turn - 1].SecondMove_SecondDice = piece.h;
+
                         this.firstTurn.Text = "YOUR TURN";
                         this.secondTurn.Text = "";
                         player2.score += piece.h * piece.w;
                         this.secondScore.Text = player2.score.ToString();
+
+                        this.turnHistory.Inlines.Add(new Run("  " + turn.ToString() + "\n"));
+                        this.playerHistory.Inlines.Add(new Run("  "+player.ToString() + "\n") { Foreground = Brushes.LightSeaGreen }) ;
+                        this.diceHistory.Inlines.Add(new Run("  " + piece.h.ToString() + "-" + piece.w.ToString() + "\n"));
+                        this.scoreHistory.Inlines.Add(new Run("  " + player2.score.ToString() + "\n"));
+
+                        /*
+                        this.turnHistory.Text += "\n" + (turn).ToString();
+                        this.playerHistory.Text += "\n" + player.ToString();
+                        this.first_diceHistory.Text += "\n" + piece.h.ToString();
+                        this.second_diceHistory.Text += "\n" + piece.w.ToString();
+                        this.scoreHistory.Text += "\n" + player2.score.ToString();*/
+                        turn++;
+                        Rounds.Add(new Round());
                     }
 
                 }
@@ -185,8 +249,8 @@ namespace LeisureView
                 {
                     for (int j = 0; j < piece.w; j++)
                     {
-                        Canvas.SetLeft(piece_rects[i * piece.w + j], pt.X + j * 50 - 25);
-                        Canvas.SetTop(piece_rects[i * piece.w + j], pt.Y + i * 50 - 25);
+                        Canvas.SetLeft(piece_rects[i * piece.w + j], pt.X + j * (xSize + xSize / 4.0) - (xSize + xSize / 4.0)/2);
+                        Canvas.SetTop(piece_rects[i * piece.w + j], pt.Y + i * (xSize + xSize / 4.0) - (xSize + xSize / 4.0)/2);
                     }
                 }
             }
@@ -222,136 +286,171 @@ namespace LeisureView
 
         private void RollTheDice_Click(object sender, RoutedEventArgs e)
         {
-            diceTheRolled = true;
-            if (startGame == false)
+            if (diceTheRolled == false)
             {
-                #region Новый код
-                startGame = true;
-                if (player == 1)
+                diceTheRolled = true;
+                bool isTurnPossible = false;
+                if (startGame == false)
                 {
-                    piece.w = rnd.Next(1, 7);
-                    piece.h = rnd.Next(1, 7);
-                    player1.FirstRolles.Add(piece.w);
-                    player1.SecondRolles.Add(piece.h);
-                    Rounds[turn - 1].FirstMove_FirstDice = piece.w;
-                    Rounds[turn - 1].FirstMove_SecondDice = piece.h;
+                    #region Новый код
+                    startGame = true;
+                    if (player == 1)
+                    {
+                        piece.w = rnd.Next(1, 7);
+                        piece.h = rnd.Next(1, 7);
 
-                    this.XText.Text = piece.w.ToString();
-                    this.YText.Text = piece.h.ToString();
+                        this.XText.Text = piece.w.ToString();
+                        this.YText.Text = piece.h.ToString();
+                    }
+                    else
+                    {
+                        piece.w = rnd.Next(1, 7);
+                        piece.h = rnd.Next(1, 7);
+                        this.XText.Text = piece.w.ToString();
+                        this.YText.Text = piece.h.ToString();
+                        
+                    }
+                    #endregion
                 }
                 else
                 {
-                    piece.w = rnd.Next(1, 7);
-                    piece.h = rnd.Next(1, 7);
-                    player2.FirstRolles.Add(piece.w);
-                    player2.SecondRolles.Add(piece.h);
-                    Rounds[turn - 1].SecondMove_FirstDice = piece.w;
-                    Rounds[turn - 1].SecondMove_SecondDice = piece.h;
-                    this.XText.Text = piece.w.ToString();
-                    this.YText.Text = piece.h.ToString();
-                }
-                #endregion
-            }
-            else
-            {
-                player = player == 1 ? 2 : 1;
-                piece.kind = player;
-                #region Новый код
-                if (player == 1)
-                {
-                    piece.w = rnd.Next(1, 4);
-                    piece.h = rnd.Next(1, 4);
-                    player1.FirstRolles.Add(piece.w);
-                    player1.SecondRolles.Add(piece.h);
-                    Rounds[turn - 1].FirstMove_FirstDice = piece.w;
-                    Rounds[turn - 1].FirstMove_SecondDice = piece.h;
-
-                    this.XText.Text = piece.w.ToString();
-                    this.YText.Text = piece.h.ToString();
-                    int size = N + 2;
-
-                    for (int m = 1; m < field.bounds; m++)
+                    player = player == 1 ? 2 : 1;
+                    piece.kind = player;
+                    #region Новый код
+                    if (player == 1)
                     {
-                        for (int n = 1; n < field.bounds; n++)
+                        piece.w = rnd.Next(1, 7);
+                        piece.h = rnd.Next(1, 7);
+                        this.XText.Text = piece.w.ToString();
+                        this.YText.Text = piece.h.ToString();
+
+                        #region Проверка, что ход возможен
+
+                        int size = N + 2;
+                        for (int m = 1; m < field.bounds; m++)
                         {
-                            if (field.cells[m * size + n].kind == 0)
-                                isTurnPossible |= field.CanPlacePiece(piece, m * size + n);
+                            for (int n = 1; n < field.bounds; n++)
+                            {
+                                if (field.cells[m * size + n].kind == 0)
+                                    isTurnPossible |= field.CanPlacePiece(piece, m * size + n);
+                                if (isTurnPossible)
+                                    break;
+                            }
+                            if (isTurnPossible)
+                                break;
+                        }
+
+                        if (isTurnPossible)
+                        {
+                            if (impossibleTurnsInTheRow > 0)
+                                impossibleTurnsInTheRow--;
+                            isTurnProceed = true;
+                            
+                            //MessageBox.Show($"What4");
+                        }
+                        else
+                        {
+                            impossibleTurnsInTheRow++;
+                            MessageBox.Show("Turn is unavailable1");
+                            diceTheRolled = false;
+                            if (impossibleTurnsInTheRow > 1) {
+                                if (player1.score > player2.score)
+                                {
+                                    MessageBox.Show("ВЫИГРАЛ ИГРОК 1!");
+                                }
+                                if (player1.score == player2.score)
+                                {
+                                    MessageBox.Show("НИЧЬЯ!");
+                                }
+                                if (player1.score < player2.score)
+                                {
+                                    MessageBox.Show("ВЫИГРАЛ ИГРОК 2!");
+                                }
+                            }
+                            //передаём ход другому игроку:
+                        }
+                        #endregion
+                    }
+
+                    else
+                    {
+                        piece.w = rnd.Next(1, 7);
+                        piece.h = rnd.Next(1, 7);
+                        
+                        this.TurnName.Text = "TURN " + turn.ToString();
+                        this.XText.Text = piece.w.ToString();
+                        this.YText.Text = piece.h.ToString();
+                        
+
+                        #region Проверка, что ход возможен
+
+                        
+                        int size = N + 2;
+                        for (int m = 1; m < field.bounds; m++)
+                        {
+                            for (int n = 1; n < field.bounds; n++)
+                            {
+                                if (field.cells[m * size + n].kind == 0)
+                                    isTurnPossible |= field.CanPlacePiece(piece, m * size + n);
+                                if (isTurnPossible)
+                                {
+                                    break;
+                                }
+                            }
                             if (isTurnPossible)
                                 break;
                         }
                         if (isTurnPossible)
-                            break;
-                    }
-
-                    if (isTurnPossible)
-                    {
-                        //MessageBox.Show($"What4");
-                    }
-                    else
-                    {
-                        impossibleTurnsInTheRow++;
-                        MessageBox.Show("Turn is unavailable");
-                    }
-                }
-                else
-                {
-                    piece.w = rnd.Next(1, 4);
-                    piece.h = rnd.Next(1, 4);
-                    player2.FirstRolles.Add(piece.w);
-                    player2.SecondRolles.Add(piece.h);
-                    Rounds[turn - 1].SecondMove_FirstDice = piece.w;
-                    Rounds[turn - 1].SecondMove_SecondDice = piece.h;
-                    turn++;
-                    this.TurnName.Text = "TURN " + turn.ToString();
-                    this.XText.Text = piece.w.ToString();
-                    this.YText.Text = piece.h.ToString();
-                    Rounds.Add(new Round());
-
-                    #region Проверка, что ход возможен
-
-                    bool isTurnPossible = false;
-                    int size = N + 2;
-                    for (int m = 1; m < field.bounds; m++)
-                    {
-                        for (int n = 1; n < field.bounds; n++)
                         {
-                            if (field.cells[m * size + n].kind == 0)
-                                isTurnPossible |= field.CanPlacePiece(piece, m * size + n);
-                            if (isTurnPossible)
-                            {
-                                //MessageBox.Show($"What1");
-                                break;
-                            }
-                            if (isTurnPossible)
-                            {
-                                //MessageBox.Show($"What2");
-                                break;
-                            }
+                            if (impossibleTurnsInTheRow > 0)
+                                impossibleTurnsInTheRow--;
+                            isTurnProceed = true;
+                            
+                            //MessageBox.Show($"What3");
                         }
-                    }
-                    if (isTurnPossible)
-                    {
-                        //MessageBox.Show($"What3");
-                    }
-                    else
-                    {
-                        impossibleTurnsInTheRow++;
-                        MessageBox.Show("Turn is unavailable");
+                        else //если 2-ому игроку негде поставить фигуру
+                        {
+                            
+                            impossibleTurnsInTheRow++;
+                            MessageBox.Show("Turn is unavailable2");
+                            diceTheRolled = false;
+                            Rounds.Add(new Round());
+                            turn++;
+                            if (impossibleTurnsInTheRow > 1) {
+                                if(player1.score > player2.score)
+                                {
+                                    MessageBox.Show("ВЫИГРАЛ ИГРОК 1!");
+                                }
+                                if (player1.score == player2.score)
+                                {
+                                    MessageBox.Show("НИЧЬЯ!");
+                                }
+                                if (player1.score < player2.score)
+                                {
+                                    MessageBox.Show("ВЫИГРАЛ ИГРОК 2!");
+                                }
+                            }
+                            //передаём ход другому игроку:
+
+                        }
+                        #endregion
+
                     }
                     #endregion
 
-                }
-                #endregion
-
-                for (int i = 0; i < piece.h; i++)
-                {
-                    for (int j = 0; j < piece.w; j++)
+                    if (isTurnPossible)
                     {
-                        piece_rects[i * piece.w + j].Visibility = Visibility.Visible;
-                        piece_rects[i * piece.w + j].Stroke = player == 1 ? Brushes.Tomato : Brushes.LightSeaGreen;
+                        for (int i = 0; i < piece.h; i++)
+                        {
+                            for (int j = 0; j < piece.w; j++)
+                            {
+                                piece_rects[i * piece.w + j].Visibility = Visibility.Visible;
+                                piece_rects[i * piece.w + j].Stroke = player == 1 ? Brushes.Tomato : Brushes.LightSeaGreen;
+                            }
+                        }
                     }
-                }
 
+                }
             }
         } 
     }
