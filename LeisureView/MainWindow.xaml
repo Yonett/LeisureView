@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LeisureView"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="1265" ResizeMode="NoResize">
-    <Grid ShowGridLines="True">
+        Title="MainWindow" Height="700" Width="1000" ResizeMode="NoResize">
+    <!-- 1265 - изначальная ширина -->
+    <Grid Background="#596174" ShowGridLines="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -22,50 +23,62 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="4*"></RowDefinition>
+                <RowDefinition Height="9*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0">PLAYER 1</TextBlock>
-            <TextBlock Grid.Row="0" Grid.Column="1">YOUR TURN</TextBlock>
-            <TextBlock Grid.Row="0" Grid.Column="2">4</TextBlock>
+            <TextBlock VerticalAlignment="Bottom" FontWeight="Bold" Foreground="#eef4f4" FontSize="30" Grid.Row="0" Grid.Column="0">PLAYER 1</TextBlock>
+            <TextBlock VerticalAlignment="Bottom" FontWeight="Bold" Foreground="#1ab9f0" FontSize="30" Grid.Row="0" Grid.Column="1" x:Name="firstTurn"></TextBlock>
+            <TextBlock VerticalAlignment="Bottom" FontWeight="Bold" Foreground="#f6385c" FontSize="30" Grid.Row="0" Grid.Column="2" x:Name="firstScore">1</TextBlock>
+            <Canvas x:Name="GameField" Background="#a4b0be" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" MouseEnter="GameField_MouseEnter" MouseMove="GameField_MouseMove" MouseLeave="GameField_MouseLeave" Cursor="None">
 
-            <Canvas x:Name="GameField" Background="LightGray" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" MouseEnter="GameField_MouseEnter" MouseMove="GameField_MouseMove" MouseLeave="GameField_MouseLeave" Cursor="None">
-                
             </Canvas>
-
-            <TextBlock Grid.Row="2" Grid.Column="0">6</TextBlock>
-            <TextBlock Grid.Row="2" Grid.Column="1">YOUR TURN</TextBlock>
-            <TextBlock Grid.Row="2" Grid.Column="2">PLAYER 2</TextBlock>
+            <TextBlock VerticalAlignment="Top" FontWeight="Bold" Foreground="#10ac84 " FontSize="30" Grid.Row="2" Grid.Column="0" x:Name="secondScore">1</TextBlock>
+            <TextBlock VerticalAlignment="Top" FontWeight="Bold" Foreground="#1ab9f0" FontSize="30" Grid.Row="2" Grid.Column="1" x:Name="secondTurn"></TextBlock>
+            <TextBlock VerticalAlignment="Top" FontWeight="Bold" Foreground="#eef4f4" FontSize="30" Grid.Row="2" Grid.Column="2">PLAYER 2</TextBlock>
 
         </Grid>
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="3*"></RowDefinition>
+                <RowDefinition Height="5*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0">TURN</TextBlock>
-            
-            <StackPanel Grid.Row="1">
-                <TextBlock x:Name="XText">1</TextBlock>
-                <TextBlock x:Name="YText">1</TextBlock>
-            </StackPanel>
+            <TextBlock Margin="0 0 0 10" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#eef4f4" FontWeight="Bold" FontSize="40" Grid.Row="0" x:Name="TurnName"></TextBlock>
 
-            <Grid Grid.Row="2">
+            <Grid Margin="20 0 20 20" Grid.Row="1" Background="#a4b0be">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+
+
+                <TextBlock Grid.Column="0"  HorizontalAlignment="Center"      VerticalAlignment="Center" FontWeight="Bold" FontSize="40" Foreground="#eef4f4" x:Name="XText">0</TextBlock>
+                <TextBlock Grid.Column="1"  HorizontalAlignment="Center"    VerticalAlignment="Center" FontWeight="Bold" FontSize="40" Foreground="#eef4f4" x:Name="YText">0</TextBlock> 
+            </Grid>
+
+            <!--
+            <DockPanel  Margin="20 0 20 20" Grid.Row="1" Background="#a4b0be" >
+                <TextBlock HorizontalAlignment="Stretch"     VerticalAlignment="Top" FontWeight="Bold" FontSize="40" Foreground="#eef4f4" x:Name="XText">1</TextBlock>
+                <TextBlock  HorizontalAlignment="Stretch"    VerticalAlignment="Top" FontWeight="Bold" FontSize="40" Foreground="#eef4f4" x:Name="YText">1</TextBlock>
+            </DockPanel> -->
+
+            <Grid Margin="20 0 20 20" Background="#a4b0be" Grid.Row="2">
                 
             </Grid>
 
-            <Button Grid.Row="3">
-                
-            </Button>
+            
+               <Button Margin="20 0 20 0" FontWeight="Bold" FontSize="30" Foreground="#eef4f4" Background="#a4b0be" Grid.Row="3" x:Name="RollTheDice" Click="RollTheDice_Click">
+                   ROLL THE DICE
+               </Button>
 
-            <TextBlock Grid.Row="4">
-                Version
+
+            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Bottom" FontWeight="Bold" FontSize="20" Foreground="#4a5265" Grid.Row="4">
+                LEISURE ALPHA RELEASE
             </TextBlock>
 
         </Grid>
