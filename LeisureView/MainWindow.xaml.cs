@@ -65,12 +65,15 @@ namespace LeisureView
             field = new Field(N);
             int size = N + 2;
             rects = new Rectangle[field.amount];
+            //rects.HorizontalAlignment = HorizontalAlignment.Center;
             piece_rects = new Rectangle[36];
+            //rects.VerticalAlignment = VerticalAlignment.Top;
             //rects.HorizontalAlignment = HorizontalAlignment.Center;
             for (int i = 0; i < size; i++)
                 for (int j = 0; j < size; j++)
                 {
                     rects[i * size + j] = new Rectangle();
+                    //rects[i * size + j].HorizontalAlignment = HorizontalAlignment.Center;
                     rects[i * size + j].MouseLeftButtonDown += MainWindow_MouseLeftButtonDown;
                 }
 
@@ -130,27 +133,8 @@ namespace LeisureView
                 }
             }
             #region Новый код
-            /*
-            if (player == 1)
-            {
-                piece.w = rnd.Next(1, 7);
-                piece.h = rnd.Next(1, 7);
-                player1.FirstRolles.Add(piece.w);
-                player1.SecondRolles.Add(piece.h);
-                Rounds[turn - 1].FirstMove_FirstDice = piece.w;
-                Rounds[turn - 1].FirstMove_SecondDice = piece.h;
-            }
-            else
-            {
-                piece.w = rnd.Next(1, 7);
-                piece.h = rnd.Next(1, 7);
-                player2.FirstRolles.Add(piece.w);
-                player2.SecondRolles.Add(piece.h);
-                Rounds[turn - 1].SecondMove_FirstDice = piece.w;
-                Rounds[turn - 1].SecondMove_SecondDice = piece.h;
-
-            } */
             #endregion
+            //MessageBoxCustomWindow result = new MessageBoxCustomWindow();
             //piece.w = rnd.Next(1, 7);
             //piece.h = rnd.Next(1, 7);
         }
@@ -286,6 +270,7 @@ namespace LeisureView
 
         private void RollTheDice_Click(object sender, RoutedEventArgs e)
         {
+            
             if (diceTheRolled == false)
             {
                 diceTheRolled = true;
@@ -346,25 +331,28 @@ namespace LeisureView
                                 impossibleTurnsInTheRow--;
                             isTurnProceed = true;
                             
-                            //MessageBox.Show($"What4");
                         }
                         else
                         {
                             impossibleTurnsInTheRow++;
-                            MessageBox.Show("Turn is unavailable1");
+                            new MessageBoxCustomWindow("Ход игрока 1 невозможен!").ShowDialog();
+                            this.turnHistory.Inlines.Add(new Run("  " + turn.ToString() + "\n") { Background = Brushes.Red });
+                            this.playerHistory.Inlines.Add(new Run("  " + player.ToString() + "\n") { Foreground = Brushes.Tomato, Background = Brushes.Red });
+                            this.diceHistory.Inlines.Add(new Run("  " + piece.h.ToString() + "-" + piece.w.ToString() + "\n") { Background = Brushes.Red });
+                            this.scoreHistory.Inlines.Add(new Run("  " + player1.score.ToString() + "\n") { Background = Brushes.Red });
                             diceTheRolled = false;
                             if (impossibleTurnsInTheRow > 1) {
                                 if (player1.score > player2.score)
                                 {
-                                    MessageBox.Show("ВЫИГРАЛ ИГРОК 1!");
+                                    new MessageBoxCustomWindow("ВЫИГРАЛ ИГРОК 1!").ShowDialog();
                                 }
                                 if (player1.score == player2.score)
                                 {
-                                    MessageBox.Show("НИЧЬЯ!");
+                                    new MessageBoxCustomWindow("НИЧЬЯ!").ShowDialog();
                                 }
                                 if (player1.score < player2.score)
                                 {
-                                    MessageBox.Show("ВЫИГРАЛ ИГРОК 2!");
+                                    new MessageBoxCustomWindow("ВЫИГРАЛ ИГРОК 2!").ShowDialog();
                                 }
                             }
                             //передаём ход другому игроку:
@@ -412,22 +400,26 @@ namespace LeisureView
                         {
                             
                             impossibleTurnsInTheRow++;
-                            MessageBox.Show("Turn is unavailable2");
+                            new MessageBoxCustomWindow("Ход игрока 2 невозможен!").ShowDialog();
+                            this.turnHistory.Inlines.Add(new Run("  " + turn.ToString() + "\n") { Background = Brushes.Red });
+                            this.playerHistory.Inlines.Add(new Run("  " + player.ToString() + "\n") { Foreground = Brushes.LightSeaGreen, Background = Brushes.Red });
+                            this.diceHistory.Inlines.Add(new Run("  " + piece.h.ToString() + "-" + piece.w.ToString() + "\n") { Background = Brushes.Red });
+                            this.scoreHistory.Inlines.Add(new Run("  " + player2.score.ToString() + "\n") { Background = Brushes.Red });
                             diceTheRolled = false;
                             Rounds.Add(new Round());
                             turn++;
                             if (impossibleTurnsInTheRow > 1) {
                                 if(player1.score > player2.score)
                                 {
-                                    MessageBox.Show("ВЫИГРАЛ ИГРОК 1!");
+                                    new MessageBoxCustomWindow("ВЫИГРАЛ ИГРОК 1!").ShowDialog();
                                 }
                                 if (player1.score == player2.score)
                                 {
-                                    MessageBox.Show("НИЧЬЯ!");
+                                    new MessageBoxCustomWindow("НИЧЬЯ!").ShowDialog();
                                 }
                                 if (player1.score < player2.score)
                                 {
-                                    MessageBox.Show("ВЫИГРАЛ ИГРОК 2!");
+                                    new MessageBoxCustomWindow("ВЫИГРАЛ ИГРОК 2!").ShowDialog();
                                 }
                             }
                             //передаём ход другому игроку:

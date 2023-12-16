@@ -27,15 +27,15 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <TextBlock VerticalAlignment="Bottom" FontWeight="Bold" Foreground="#eef4f4" FontSize="30" Grid.Row="0" Grid.Column="0">PLAYER 1</TextBlock>
-            <TextBlock VerticalAlignment="Bottom" FontWeight="Bold" Foreground="#1ab9f0" FontSize="30" Grid.Row="0" Grid.Column="1" x:Name="firstTurn"></TextBlock>
-            <TextBlock VerticalAlignment="Bottom" FontWeight="Bold" Foreground="#f6385c" FontSize="30" Grid.Row="0" Grid.Column="2" x:Name="firstScore">1</TextBlock>
-            <Canvas x:Name="GameField" Background="#a4b0be" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" MouseEnter="GameField_MouseEnter" MouseMove="GameField_MouseMove" MouseLeave="GameField_MouseLeave" Cursor="None">
-
+            <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Left" FontWeight="Bold" Foreground="#eef4f4" FontSize="30" Grid.Row="0" Grid.Column="0">PLAYER 1</TextBlock>
+            <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" FontWeight="Bold" Foreground="#1ab9f0" FontSize="30" Grid.Row="0" Grid.Column="1" x:Name="firstTurn"></TextBlock>
+            <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Right" FontWeight="Bold" Foreground="#f6385c" FontSize="30" Grid.Row="0" Grid.Column="2" x:Name="firstScore">1</TextBlock>
+            <Canvas  x:Name="GameField" Background="#a4b0be" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" MouseEnter="GameField_MouseEnter" MouseMove="GameField_MouseMove" MouseLeave="GameField_MouseLeave" Cursor="None">
+                
             </Canvas>
-            <TextBlock VerticalAlignment="Top" FontWeight="Bold" Foreground="#10ac84 " FontSize="30" Grid.Row="2" Grid.Column="0" x:Name="secondScore">1</TextBlock>
-            <TextBlock VerticalAlignment="Top" FontWeight="Bold" Foreground="#1ab9f0" FontSize="30" Grid.Row="2" Grid.Column="1" x:Name="secondTurn"></TextBlock>
-            <TextBlock VerticalAlignment="Top" FontWeight="Bold" Foreground="#eef4f4" FontSize="30" Grid.Row="2" Grid.Column="2">PLAYER 2</TextBlock>
+            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold" Foreground="#10ac84 " FontSize="30" Grid.Row="2" Grid.Column="0" x:Name="secondScore">1</TextBlock>
+            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" Foreground="#1ab9f0" FontSize="30" Grid.Row="2" Grid.Column="1" x:Name="secondTurn"></TextBlock>
+            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Right" FontWeight="Bold" Foreground="#eef4f4" FontSize="30" Grid.Row="2" Grid.Column="2">PLAYER 2</TextBlock>
 
         </Grid>
 
@@ -57,8 +57,8 @@
                 </Grid.ColumnDefinitions>
 
 
-                <TextBlock Grid.Column="0"  HorizontalAlignment="Center"      VerticalAlignment="Center" FontWeight="Bold" FontSize="40" Foreground="#eef4f4" x:Name="XText">0</TextBlock>
-                <TextBlock Grid.Column="1"  HorizontalAlignment="Center"    VerticalAlignment="Center" FontWeight="Bold" FontSize="40" Foreground="#eef4f4" x:Name="YText">0</TextBlock> 
+                <TextBlock Grid.Column="0"  HorizontalAlignment="Center"  VerticalAlignment="Center" FontWeight="Bold" FontSize="40" Foreground="#eef4f4" x:Name="XText">0</TextBlock>
+                <TextBlock Grid.Column="1"  HorizontalAlignment="Center"  VerticalAlignment="Center" FontWeight="Bold" FontSize="40" Foreground="#eef4f4" x:Name="YText">0</TextBlock> 
             </Grid>
 
             <!--
@@ -66,8 +66,9 @@
                 <TextBlock HorizontalAlignment="Stretch"     VerticalAlignment="Top" FontWeight="Bold" FontSize="40" Foreground="#eef4f4" x:Name="XText">1</TextBlock>
                 <TextBlock  HorizontalAlignment="Stretch"    VerticalAlignment="Top" FontWeight="Bold" FontSize="40" Foreground="#eef4f4" x:Name="YText">1</TextBlock>
             </DockPanel> -->
-            <ScrollViewer Grid.Row="2">
-            <Grid Margin="20 0 20 20" Background="#a4b0be" >
+            <ScrollViewer   Margin="0 0 20 0" Grid.Row="2" >
+                <!--VerticalScrollBarVisibility="Auto"-->
+            <Grid Margin="20 0 0 0" Background="#a4b0be" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -85,7 +86,7 @@
             </ScrollViewer>
 
             
-               <Button Margin="20 0 20 0" FontWeight="Bold" FontSize="30" Foreground="#eef4f4" Background="#a4b0be" Grid.Row="3" x:Name="RollTheDice" Click="RollTheDice_Click">
+               <Button Margin="20 20 20 0" FontWeight="Bold" FontSize="30" Foreground="#eef4f4" Background="#a4b0be" Grid.Row="3" x:Name="RollTheDice" Click="RollTheDice_Click">
                    ROLL THE DICE
                </Button>
 
