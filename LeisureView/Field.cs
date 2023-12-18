@@ -16,20 +16,20 @@ namespace LeisureView
 
         public bool CanPlaceOnCellByEmptiness(int index)
         {
-            return this.cells[index].kind == 0;
+            return this.cells[index].Kind == 0;
         }
 
         public bool CanPlaceOnCellByNearCells(int kind, int index)
         {
             return
             (
-                this.cells[index + 1].kind == kind // Right cell
+                this.cells[index + 1].Kind == kind // Right cell
                 ||
-                this.cells[index - 1].kind == kind // Left cell
+                this.cells[index - 1].Kind == kind // Left cell
                 ||
-                this.cells[index - this.size].kind == kind // Top cell
+                this.cells[index - this.size].Kind == kind // Top cell
                 ||
-                this.cells[index + this.size].kind == kind // Bottom cell
+                this.cells[index + this.size].Kind == kind // Bottom cell
             );
         }
 
@@ -94,21 +94,21 @@ namespace LeisureView
             for (int i = 0; i < this.amount; i++)
                 cells[i] = new Cell();
 
-            cells[n + 3].kind = 1;
-            cells[this.amount - n - 4].kind = 2;
+            cells[n + 3].Kind = 1;
+            cells[this.amount - n - 4].Kind = 2;
 
             for (int i = 1; i <= n; i++)
-                cells[i].kind = 3;
+                cells[i].Kind = 3;
 
             for (int i = 0; i < this.size; i++)
-                cells[this.size * i].kind = 3;
+                cells[this.size * i].Kind = 3;
 
-            cells[n + 1].kind = 3;
+            cells[n + 1].Kind = 3;
             for (int i = 1; i <= this.size; i++)
-                cells[this.size * i - 1].kind = 3;
+                cells[this.size * i - 1].Kind = 3;
 
             for (int i = 0; i < n; i++)
-                cells[amount - (n - i) - 1].kind = 3;
+                cells[amount - (n - i) - 1].Kind = 3;
 
         }
     }

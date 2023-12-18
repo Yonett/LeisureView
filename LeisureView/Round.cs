@@ -12,7 +12,8 @@ namespace LeisureView
         public int FirstMove_SecondDice;
         public int SecondMove_FirstDice;
         public int SecondMove_SecondDice;
-        public Round() {
+        public Round()
+        {
             FirstMove_FirstDice = 0;
             FirstMove_SecondDice = 0;
             SecondMove_FirstDice = 0;

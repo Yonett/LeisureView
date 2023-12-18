@@ -7,7 +7,29 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1000" ResizeMode="NoResize">
     <!-- 1265 - изначальная ширина -->
-    <Grid Background="#596174" ShowGridLines="True">
+    
+    <Window.Resources>
+        
+        <!-- Background Colors -->
+        <SolidColorBrush x:Key="backgroundColorDark" Color="#596174"/>
+        <SolidColorBrush x:Key="backgroundColorLight" Color="#a4b0be"/>
+        <!-- xxx -->
+
+        <!-- Players Colors -->
+        <SolidColorBrush x:Key="firstPlayerColor" Color="#f6385c"/>
+        <SolidColorBrush x:Key="secondPlayerColor" Color="#10ac84"/>
+        <!-- xxx -->
+
+        <!-- Text Colors -->
+        <SolidColorBrush x:Key="primaryText" Color="#eef4f4"/>
+        <SolidColorBrush x:Key="secondaryText" Color="#1ab9f0"/>
+        <SolidColorBrush x:Key="additionalText" Color="#4a5265"/>
+        <!-- xxx -->
+        
+    </Window.Resources>
+    
+    <Grid Background="{StaticResource backgroundColorDark}" ShowGridLines="False">
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -27,18 +49,17 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Left" FontWeight="Bold" Foreground="#eef4f4" FontSize="30" Grid.Row="0" Grid.Column="0">PLAYER 1</TextBlock>
-            <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" FontWeight="Bold" Foreground="#1ab9f0" FontSize="30" Grid.Row="0" Grid.Column="1" x:Name="firstTurn"></TextBlock>
-            <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Right" FontWeight="Bold" Foreground="#f6385c" FontSize="30" Grid.Row="0" Grid.Column="2" x:Name="firstScore">1</TextBlock>
+            <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource primaryText}" FontSize="30" Grid.Row="0" Grid.Column="0" Text="{Binding Path=test}"/>
+            <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource secondaryText}" FontSize="30" Grid.Row="0" Grid.Column="1" x:Name="firstTurn"></TextBlock>
+            <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource firstPlayerColor}" FontSize="30" Grid.Row="0" Grid.Column="2" x:Name="firstScore">1</TextBlock>
 
-            <Canvas  x:Name="GameField" Background="#a4b0be" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" MouseEnter="GameField_MouseEnter" MouseMove="GameField_MouseMove" MouseLeave="GameField_MouseLeave" Cursor="None">
+            <Canvas x:Name="GameField" Margin="20 0 20 0" Background="{StaticResource backgroundColorLight}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" MouseEnter="GameField_MouseEnter" MouseMove="GameField_MouseMove" MouseLeave="GameField_MouseLeave" Cursor="None" Width="{Binding ActualHeight, RelativeSource={RelativeSource self}}">
 
             </Canvas>
 
-
-            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold" Foreground="#10ac84 " FontSize="30" Grid.Row="2" Grid.Column="0" x:Name="secondScore">1</TextBlock>
-            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" Foreground="#1ab9f0" FontSize="30" Grid.Row="2" Grid.Column="1" x:Name="secondTurn"></TextBlock>
-            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Right" FontWeight="Bold" Foreground="#eef4f4" FontSize="30" Grid.Row="2" Grid.Column="2">PLAYER 2</TextBlock>
+            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource secondPlayerColor}" FontSize="30" Grid.Row="2" Grid.Column="0" x:Name="secondScore">1</TextBlock>
+            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource secondaryText}" FontSize="30" Grid.Row="2" Grid.Column="1" x:Name="secondTurn"></TextBlock>
+            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource primaryText}" FontSize="30" Grid.Row="2" Grid.Column="2">PLAYER 2</TextBlock>
 
         </Grid>
 
@@ -51,7 +72,7 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <TextBlock Margin="0 0 0 10" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#eef4f4" FontWeight="Bold" FontSize="40" Grid.Row="0" x:Name="TurnName"></TextBlock>
+            <TextBlock Margin="0 0 0 10" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="{StaticResource primaryText}" FontWeight="Bold" FontSize="30" Grid.Row="0" x:Name="TurnName" Text="{Binding turn}"/>
 
             <Grid Margin="20 0 20 20" Grid.Row="1" Background="#a4b0be">
                 <Grid.ColumnDefinitions>
@@ -94,8 +115,8 @@
                </Button>
 
 
-            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Bottom" FontWeight="Bold" FontSize="20" Foreground="#4a5265" Grid.Row="4">
-                LEISURE ALPHA RELEASE
+            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Bottom" FontWeight="Bold" FontSize="20" Foreground="{StaticResource additionalText}" Grid.Row="4">
+                LEISURE BETA RELEASE
             </TextBlock>
 
         </Grid>

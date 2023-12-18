@@ -22,7 +22,7 @@ namespace LeisureView
         //public int gameEnd = 0;
         public int player = 2;
         //public int N = 9;
-        public int N = 10;
+        public int N = 20;
         byte impossibleTurnsInTheRow = 0;
         public bool startGame = false;
         public bool diceTheRolled = false;
@@ -33,16 +33,20 @@ namespace LeisureView
         public Rectangle[] piece_rects;
         public Field field;
         public Piece piece = new(1, 0, 0);
-        public Player player1 = new Player();
-        public Player player2 = new Player();
+        public Player player1 = new Player("Player 1");
+        public Player player2 = new Player("Player 2");
         public List<Round> Rounds = new List<Round>();
         public int turn = 0;
+        public string test { get; set; } = "PLAYER 1";
         Random rnd = new Random();
 
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = this;
+
             turn++;
+
             this.turnHistory.Inlines.Clear();
             this.playerHistory.Inlines.Clear();
             this.diceHistory.Inlines.Clear();
@@ -60,6 +64,7 @@ namespace LeisureView
             this.second_diceHistory.Text = "2 бросок";
             this.scoreHistory.Text = "Очки";
             */
+
             this.firstTurn.Text = "YOUR TURN";
             this.TurnName.Text = "TURN " + turn.ToString();
             Rounds.Add(new Round());
@@ -95,7 +100,7 @@ namespace LeisureView
                         rects[i * size + j].Height = ySize;
                     }
 
-                    switch (field.cells[i * size + j].kind)
+                    switch (field.cells[i * size + j].Kind)
                     {
                         case 0:
                             rects[i * size + j].Fill = Brushes.White;
@@ -104,7 +109,7 @@ namespace LeisureView
                             rects[i * size + j].Fill = Brushes.Tomato;
                             break;
                         case 2:
-                            rects[i * size + j].Fill = Brushes.LightSeaGreen;
+                            rects[i * size + j].Fill = (Brush)this.FindResource("secondPlayerColor");
                             break;
                         case 3:
                             rects[i * size + j].Fill = Brushes.Black;
@@ -154,7 +159,7 @@ namespace LeisureView
                         for (int j = 0; j < piece.w; j++)
                         {
                             rects[index + i * (N + 2) + j].Fill = player == 1 ? Brushes.Tomato : Brushes.LightSeaGreen;
-                            field.cells[index + i * (N + 2) + j].kind = piece.kind;
+                            field.cells[index + i * (N + 2) + j].Kind = piece.kind;
                             piece_rects[i * piece.w + j].Visibility = Visibility.Hidden;
                         }
 
@@ -341,7 +346,7 @@ namespace LeisureView
                             {
                                 for (int n = 1; n < field.bounds; n++)
                                 {
-                                    if (field.cells[m * size + n].kind == 0)
+                                    if (field.cells[m * size + n].Kind == 0)
                                         isTurnPossible |= field.CanPlacePiece(piece, m * size + n);
                                     if (isTurnPossible)
                                         break;
@@ -407,7 +412,7 @@ namespace LeisureView
                             {
                                 for (int n = 1; n < field.bounds; n++)
                                 {
-                                    if (field.cells[m * size + n].kind == 0)
+                                    if (field.cells[m * size + n].Kind == 0)
                                         isTurnPossible |= field.CanPlacePiece(piece, m * size + n);
                                     if (isTurnPossible)
                                     {
@@ -529,7 +534,7 @@ namespace LeisureView
             {
                 for (int j = 0; j < size; j++)
                 {
-                    switch (field.cells[i * size + j].kind)
+                    switch (field.cells[i * size + j].Kind)
                     {
                         case 0:
                             rects[i * size + j].Fill = Brushes.White;

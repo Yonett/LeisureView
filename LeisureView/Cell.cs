@@ -8,7 +8,21 @@ namespace LeisureView
 {
     public class Cell
     {
-        public int kind = 0;
+        private int kind = 0;
+
+        public int Kind
+        {
+            get
+            {
+                return kind;
+            }
+
+            set
+            {
+                this.kind = value;
+            }
+        }
+
         public Cell() { }
     }
 }
