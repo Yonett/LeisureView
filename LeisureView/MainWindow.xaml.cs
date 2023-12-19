@@ -29,21 +29,20 @@ namespace LeisureView
         public double xSize, ySize = 40;
         public int numberOfMissedMoves = 0;
         bool isTurnPossible, isTurnProceed;
-        public Rectangle[] rects;
-        public Rectangle[] piece_rects;
+        public Rectangle[] rects; // To ViewModel
+        public Rectangle[] piece_rects; // To ViewModel
         public Field field;
         public Piece piece = new(1, 0, 0);
         public Player player1 = new Player("Player 1");
         public Player player2 = new Player("Player 2");
         public List<Round> Rounds = new List<Round>();
-        public int turn = 0;
+        public int turn { get; set; } = 0;
         public string test { get; set; } = "PLAYER 1";
         Random rnd = new Random();
 
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = this;
 
             turn++;
 
@@ -65,7 +64,7 @@ namespace LeisureView
             this.scoreHistory.Text = "Очки";
             */
 
-            this.firstTurn.Text = "YOUR TURN";
+            //this.firstTurn.Text = "YOUR TURN";
             this.TurnName.Text = "TURN " + turn.ToString();
             Rounds.Add(new Round());
             field = new Field(N);
@@ -177,8 +176,8 @@ namespace LeisureView
                         player1.SecondRolles.Add(piece.h);
                         Rounds[turn - 1].FirstMove_FirstDice = piece.w;
                         Rounds[turn - 1].FirstMove_SecondDice = piece.h;
-                        this.firstTurn.Text = "";
-                        this.secondTurn.Text = "YOUR TURN";
+                        //this.firstTurn.Text = "";
+                        //this.secondTurn.Text = "YOUR TURN";
                         player1.score += piece.h * piece.w;
                         this.firstScore.Text = player1.score.ToString();
 
@@ -201,8 +200,8 @@ namespace LeisureView
                         Rounds[turn - 1].SecondMove_FirstDice = piece.w;
                         Rounds[turn - 1].SecondMove_SecondDice = piece.h;
 
-                        this.firstTurn.Text = "YOUR TURN";
-                        this.secondTurn.Text = "";
+                        //this.firstTurn.Text = "YOUR TURN";
+                        //this.secondTurn.Text = "";
                         player2.score += piece.h * piece.w;
                         this.secondScore.Text = player2.score.ToString();
 

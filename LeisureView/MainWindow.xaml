@@ -4,8 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LeisureView"
+        xmlns:converters="clr-namespace:LeisureView.Converters"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1000" ResizeMode="NoResize">
+        Title="MainWindow" Height="700" Width="1000" ResizeMode="NoResize"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <!-- 1265 - изначальная ширина -->
     
     <Window.Resources>
@@ -25,7 +27,9 @@
         <SolidColorBrush x:Key="secondaryText" Color="#1ab9f0"/>
         <SolidColorBrush x:Key="additionalText" Color="#4a5265"/>
         <!-- xxx -->
-        
+
+        <converters:IntToVisibilityConverter x:Key="RoundToVisibility"/>
+
     </Window.Resources>
     
     <Grid Background="{StaticResource backgroundColorDark}" ShowGridLines="False">
@@ -49,17 +53,25 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource primaryText}" FontSize="30" Grid.Row="0" Grid.Column="0" Text="{Binding Path=test}"/>
-            <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource secondaryText}" FontSize="30" Grid.Row="0" Grid.Column="1" x:Name="firstTurn"></TextBlock>
+            <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource primaryText}" x:Name="firstPlayerName" FontSize="30" Grid.Row="0" Grid.Column="0" Text="1"/>
+            
+            <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource secondaryText}" FontSize="30" Grid.Row="0" Grid.Column="1" x:Name="firstTurn"
+                       Visibility="{Binding Path=turn, Converter={StaticResource RoundToVisibility}, ConverterParameter={x:Reference Name=firstPlayerName}}"
+                       Text="YOUR TURN"/>
+            
             <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource firstPlayerColor}" FontSize="30" Grid.Row="0" Grid.Column="2" x:Name="firstScore">1</TextBlock>
 
-            <Canvas x:Name="GameField" Margin="20 0 20 0" Background="{StaticResource backgroundColorLight}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" MouseEnter="GameField_MouseEnter" MouseMove="GameField_MouseMove" MouseLeave="GameField_MouseLeave" Cursor="None" Width="{Binding ActualHeight, RelativeSource={RelativeSource self}}">
+            <Canvas x:Name="GameField" Margin="20 0 20 0" Background="{StaticResource backgroundColorLight}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" MouseEnter="GameField_MouseEnter" MouseMove="GameField_MouseMove" MouseLeave="GameField_MouseLeave" Cursor="None" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
 
             </Canvas>
 
             <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource secondPlayerColor}" FontSize="30" Grid.Row="2" Grid.Column="0" x:Name="secondScore">1</TextBlock>
-            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource secondaryText}" FontSize="30" Grid.Row="2" Grid.Column="1" x:Name="secondTurn"></TextBlock>
-            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource primaryText}" FontSize="30" Grid.Row="2" Grid.Column="2">PLAYER 2</TextBlock>
+            
+            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource secondaryText}" FontSize="30" Grid.Row="2" Grid.Column="1" x:Name="secondTurn"
+                       Visibility="{Binding Path=turn, Converter={StaticResource RoundToVisibility}, ConverterParameter={x:Reference Name=secondPlayerName}}"
+                       Text="YOUR TURN"/>
+            
+            <TextBlock x:Name="secondPlayerName" VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource primaryText}" FontSize="30" Grid.Row="2" Grid.Column="2" Text="2"/>
 
         </Grid>
 
